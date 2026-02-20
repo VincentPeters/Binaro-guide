@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binaro Puzzle Guide — From Beginner to Master</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ============================================ -->
+<!--                  NAVIGATION                  -->
+<!-- ============================================ -->
+<nav id="navbar">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-logo">
+            <span class="logo-grid">
+                <span class="logo-cell c0"></span><span class="logo-cell c1"></span>
+                <span class="logo-cell c1"></span><span class="logo-cell c0"></span>
+            </span>
+            Binaro Guide
+        </a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#chapter-1">Rules</a></li>
+            <li><a href="#chapter-2">Basics</a></li>
+            <li><a href="#chapter-3">Intermediate</a></li>
+            <li><a href="#chapter-4">Advanced</a></li>
+            <li><a href="#chapter-5">Expert</a></li>
+            <li><a href="#chapter-6">Practice</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ============================================ -->
+<!--                    HERO                      -->
+<!-- ============================================ -->
+<header id="hero">
+    <div class="hero-bg-grid" id="heroBgGrid"></div>
+    <div class="hero-content">
+        <div class="hero-badge">Complete Puzzle Guide</div>
+        <h1>Master the Art of <span class="highlight">Binaro</span></h1>
+        <p class="hero-subtitle">
+            A deep, visual, step-by-step guide from your very first 4&times;4 puzzle
+            all the way to conquering 14&times;14 grids like a pro.
+        </p>
+        <div class="hero-actions">
+            <a href="#chapter-1" class="btn btn-primary">Start Learning</a>
+            <a href="#chapter-6" class="btn btn-secondary">Jump to Practice</a>
+        </div>
+        <div class="hero-stats">
+            <div class="stat"><span class="stat-num">6</span><span class="stat-label">Chapters</span></div>
+            <div class="stat"><span class="stat-num">25+</span><span class="stat-label">Techniques</span></div>
+            <div class="stat"><span class="stat-num">14×14</span><span class="stat-label">Max Grid</span></div>
+        </div>
+    </div>
+    <div class="scroll-indicator">
+        <span>Scroll to begin</span>
+        <div class="scroll-arrow"></div>
+    </div>
+</header>
+
+<!-- ============================================ -->
+<!--          CHAPTER 1: WHAT IS BINARO           -->
+<!-- ============================================ -->
+<section id="chapter-1" class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-number">Chapter 1</div>
+        <h2>What is Binaro?</h2>
+        <p class="chapter-intro">Understanding the game, the grid, and the three golden rules.</p>
+    </div>
+
+    <div class="content-block">
+        <div class="info-card accent-blue">
+            <div class="info-icon">?</div>
+            <div>
+                <h3>The Game</h3>
+                <p>
+                    <strong>Binaro</strong> (also known as <em>Takuzu</em>, <em>Binairo</em>, or <em>Binary Puzzle</em>)
+                    is a logic puzzle played on an even-sized grid. Your goal is to fill every cell with either
+                    a <span class="cell-inline zero">0</span> or a <span class="cell-inline one">1</span>,
+                    following three simple rules.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- THE THREE RULES -->
+    <div class="content-block">
+        <h3 class="section-title">The Three Golden Rules</h3>
+
+        <div class="rules-grid">
+            <!-- Rule 1 -->
+            <div class="rule-card" data-rule="1">
+                <div class="rule-number">Rule 1</div>
+                <h4>No Three in a Row</h4>
+                <p>No more than <strong>two consecutive</strong> identical numbers may appear in any row or column.</p>
+                <div class="rule-visual">
+                    <div class="rule-example good">
+                        <div class="rule-label">Allowed</div>
+                        <div class="mini-row">
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                    </div>
+                    <div class="rule-example bad">
+                        <div class="rule-label">Forbidden</div>
+                        <div class="mini-row">
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero err">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 2 -->
+            <div class="rule-card" data-rule="2">
+                <div class="rule-number">Rule 2</div>
+                <h4>Equal Count</h4>
+                <p>Each row and each column must contain an <strong>equal number</strong> of 0s and 1s.</p>
+                <div class="rule-visual">
+                    <div class="rule-example good">
+                        <div class="rule-label">6×6 row: three 0s, three 1s</div>
+                        <div class="mini-row">
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                    </div>
+                    <div class="rule-example bad">
+                        <div class="rule-label">Four 0s, two 1s — wrong!</div>
+                        <div class="mini-row">
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Rule 3 -->
+            <div class="rule-card" data-rule="3">
+                <div class="rule-number">Rule 3</div>
+                <h4>Unique Rows &amp; Columns</h4>
+                <p>No two rows may be identical, and no two columns may be identical.</p>
+                <div class="rule-visual">
+                    <div class="rule-example bad">
+                        <div class="rule-label">These two rows are identical — forbidden!</div>
+                        <div class="mini-row">
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                        <div class="mini-row" style="margin-top:4px">
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm one err">1</span>
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm one err">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- GRID SIZES -->
+    <div class="content-block">
+        <h3 class="section-title">Grid Sizes</h3>
+        <p>Binaro grids are always <strong>even × even</strong>. Here's what you'll encounter:</p>
+        <div class="grid-sizes-showcase">
+            <div class="grid-size-card" data-size="4">
+                <div class="grid-size-visual grid-4"></div>
+                <div class="grid-size-label">4×4</div>
+                <div class="grid-size-diff">Beginner</div>
+            </div>
+            <div class="grid-size-card" data-size="6">
+                <div class="grid-size-visual grid-6"></div>
+                <div class="grid-size-label">6×6</div>
+                <div class="grid-size-diff">Easy</div>
+            </div>
+            <div class="grid-size-card" data-size="8">
+                <div class="grid-size-visual grid-8"></div>
+                <div class="grid-size-label">8×8</div>
+                <div class="grid-size-diff">Medium</div>
+            </div>
+            <div class="grid-size-card" data-size="10">
+                <div class="grid-size-visual grid-10"></div>
+                <div class="grid-size-label">10×10</div>
+                <div class="grid-size-diff">Hard</div>
+            </div>
+            <div class="grid-size-card" data-size="12">
+                <div class="grid-size-visual grid-12"></div>
+                <div class="grid-size-label">12×12</div>
+                <div class="grid-size-diff">Expert</div>
+            </div>
+            <div class="grid-size-card" data-size="14">
+                <div class="grid-size-visual grid-14"></div>
+                <div class="grid-size-label">14×14</div>
+                <div class="grid-size-diff">Master</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- YOUR FIRST 4x4 WALKTHROUGH -->
+    <div class="content-block">
+        <h3 class="section-title">Your First 4×4 Puzzle — Step by Step</h3>
+        <p>Let's solve a real puzzle together. Click <strong>Next Step</strong> to walk through the solution.</p>
+
+        <div class="walkthrough-container" id="walkthrough1">
+            <div class="puzzle-grid-wrapper">
+                <div class="puzzle-grid" id="walkthrough1Grid"></div>
+            </div>
+            <div class="walkthrough-controls">
+                <div class="walkthrough-step-info">
+                    <div class="step-counter">Step <span id="w1StepNum">0</span> / <span id="w1StepTotal">0</span></div>
+                    <div class="step-explanation" id="w1Explanation">Press "Next Step" to begin.</div>
+                </div>
+                <div class="walkthrough-buttons">
+                    <button class="btn btn-secondary" id="w1Prev" disabled>Previous</button>
+                    <button class="btn btn-primary" id="w1Next">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--      CHAPTER 2: BASIC STRATEGIES (4-6)       -->
+<!-- ============================================ -->
+<section id="chapter-2" class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-number">Chapter 2</div>
+        <h2>Basic Strategies</h2>
+        <p class="chapter-intro">The foundational techniques that will solve most 4×4 and 6×6 puzzles.</p>
+    </div>
+
+    <!-- Strategy: Sandwich -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge beginner">Beginner</span> Strategy 1: The Sandwich Rule</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>If two identical numbers have exactly <strong>one empty cell</strong> between them, that cell <em>must</em> be the opposite number. Otherwise, you'd create three in a row.</p>
+                <div class="info-card accent-green">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>Pattern:</strong> If you see <span class="cell-inline zero">0</span> _ <span class="cell-inline zero">0</span>, the middle cell must be <span class="cell-inline one">1</span>.<br>
+                        Similarly, <span class="cell-inline one">1</span> _ <span class="cell-inline one">1</span> → the middle is <span class="cell-inline zero">0</span>.
+                    </div>
+                </div>
+            </div>
+            <div class="strategy-visual">
+                <div class="before-after">
+                    <div class="ba-item">
+                        <div class="ba-label">Before</div>
+                        <div class="mini-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm empty">?</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                    </div>
+                    <div class="ba-arrow">→</div>
+                    <div class="ba-item">
+                        <div class="ba-label">After</div>
+                        <div class="mini-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero solved">0</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Pair Capping -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge beginner">Beginner</span> Strategy 2: Pair Capping</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>When two identical numbers sit <strong>next to each other</strong>, the cells on <em>both sides</em> must be the opposite number.</p>
+                <div class="info-card accent-green">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>Pattern:</strong> _ <span class="cell-inline zero">0</span><span class="cell-inline zero">0</span> _ → <span class="cell-inline one">1</span> <span class="cell-inline zero">0</span><span class="cell-inline zero">0</span> <span class="cell-inline one">1</span>
+                    </div>
+                </div>
+            </div>
+            <div class="strategy-visual">
+                <div class="before-after">
+                    <div class="ba-item">
+                        <div class="ba-label">Before</div>
+                        <div class="mini-row">
+                            <span class="cell-sm empty">?</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm empty">?</span>
+                        </div>
+                    </div>
+                    <div class="ba-arrow">→</div>
+                    <div class="ba-item">
+                        <div class="ba-label">After</div>
+                        <div class="mini-row">
+                            <span class="cell-sm one solved">1</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one solved">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Counting -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge beginner">Beginner</span> Strategy 3: Counting Completion</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>If a row or column already has its <strong>maximum quota</strong> of one number, every remaining empty cell must be the other number.</p>
+                <div class="info-card accent-blue">
+                    <div class="info-icon">i</div>
+                    <div>
+                        In a 6×6 grid, each row/column needs exactly 3 zeros and 3 ones. If a row already has 3 ones, all empty cells become 0.
+                    </div>
+                </div>
+                <p>This is especially powerful when combined with the sandwich and capping rules — solve a few cells, then count to fill the rest.</p>
+            </div>
+            <div class="strategy-visual">
+                <div class="before-after">
+                    <div class="ba-item">
+                        <div class="ba-label">Row has 3 ones already</div>
+                        <div class="mini-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm empty">?</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm empty">?</span>
+                        </div>
+                    </div>
+                    <div class="ba-arrow">→</div>
+                    <div class="ba-item">
+                        <div class="ba-label">Fill remaining with 0</div>
+                        <div class="mini-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero solved">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero solved">0</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Edge Logic -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge beginner">Beginner</span> Strategy 4: Edge Forcing</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>Pay special attention to the <strong>edges</strong> of the grid. When a pair sits at the start or end of a row/column, the cell on the open side is forced.</p>
+                <div class="info-card accent-yellow">
+                    <div class="info-icon">★</div>
+                    <div>
+                        <strong>Tip:</strong> Always scan edges first! Pairs at the boundary only need one cap, making them easy to spot.
+                    </div>
+                </div>
+            </div>
+            <div class="strategy-visual">
+                <div class="before-after">
+                    <div class="ba-item">
+                        <div class="ba-label">Pair at the edge</div>
+                        <div class="mini-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm empty">?</span>
+                            <span class="cell-sm empty">?</span>
+                        </div>
+                    </div>
+                    <div class="ba-arrow">→</div>
+                    <div class="ba-item">
+                        <div class="ba-label">Cap the open side</div>
+                        <div class="mini-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero solved">0</span>
+                            <span class="cell-sm empty">?</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 6x6 Walkthrough -->
+    <div class="content-block">
+        <h3 class="section-title">Practice: Solve a 6×6 Puzzle</h3>
+        <p>Apply the basic strategies you just learned. Walk through each step.</p>
+        <div class="walkthrough-container" id="walkthrough2">
+            <div class="puzzle-grid-wrapper">
+                <div class="puzzle-grid" id="walkthrough2Grid"></div>
+            </div>
+            <div class="walkthrough-controls">
+                <div class="walkthrough-step-info">
+                    <div class="step-counter">Step <span id="w2StepNum">0</span> / <span id="w2StepTotal">0</span></div>
+                    <div class="step-explanation" id="w2Explanation">Press "Next Step" to begin solving.</div>
+                </div>
+                <div class="walkthrough-buttons">
+                    <button class="btn btn-secondary" id="w2Prev" disabled>Previous</button>
+                    <button class="btn btn-primary" id="w2Next">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--    CHAPTER 3: INTERMEDIATE STRATEGIES (8)     -->
+<!-- ============================================ -->
+<section id="chapter-3" class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-number">Chapter 3</div>
+        <h2>Intermediate Strategies</h2>
+        <p class="chapter-intro">Level up to 8×8 grids with more powerful deduction techniques.</p>
+    </div>
+
+    <!-- Strategy: Elimination by Counting -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge intermediate">Intermediate</span> Strategy 5: Double-Pair Deduction</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>When a row has <strong>only two empty cells</strong> and placing one number in either cell would violate the three-in-a-row rule or the equal count rule, the placement is forced.</p>
+                <div class="info-card accent-purple">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>How it works:</strong> Suppose a 6-cell row looks like:
+                        <span class="cell-inline one">1</span>
+                        <span class="cell-inline zero">0</span>
+                        <span class="cell-inline one">1</span>
+                        <span class="cell-inline empty">?</span>
+                        <span class="cell-inline zero">0</span>
+                        <span class="cell-inline empty">?</span>.
+                        Count: two 1s, two 0s. Need one more of each. The 4th cell is next to a 1, and cell 6 is after a 0 — but you must also avoid three in a row!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Cross-Reference -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge intermediate">Intermediate</span> Strategy 6: Cross-Referencing Rows &amp; Columns</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>Every cell belongs to <strong>both</strong> a row and a column. When a cell can't be determined by its row alone, check the column — and vice versa.</p>
+                <div class="info-card accent-blue">
+                    <div class="info-icon">i</div>
+                    <div>
+                        This is the single biggest upgrade from beginner to intermediate play. Always think in two dimensions.
+                    </div>
+                </div>
+                <p><strong>Technique:</strong> For each empty cell, ask:</p>
+                <ol>
+                    <li>What does this cell's <strong>row</strong> need? (count 0s and 1s, check neighbors)</li>
+                    <li>What does this cell's <strong>column</strong> need?</li>
+                    <li>If both constraints agree → place the value!</li>
+                </ol>
+            </div>
+            <div class="strategy-visual">
+                <div class="crossref-diagram">
+                    <div class="crossref-grid">
+                        <div class="cr-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm zero">0</span>
+                        </div>
+                        <div class="cr-row">
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm empty highlight-cell">?</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                        <div class="cr-row">
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm empty">?</span>
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                        </div>
+                        <div class="cr-row">
+                            <span class="cell-sm zero">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm empty">?</span>
+                            <span class="cell-sm zero">0</span>
+                        </div>
+                    </div>
+                    <div class="cr-arrows">
+                        <div class="cr-note">Row needs: 1 zero, 0 ones → must be <span class="cell-inline zero">0</span></div>
+                        <div class="cr-note">Column has: 1,0 — needs 1 more of each — both possible</div>
+                        <div class="cr-note">Row constraint alone solves it!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Almost Full Rows -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge intermediate">Intermediate</span> Strategy 7: The Almost-Full Line</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>When a line has only <strong>2-3 empty cells</strong>, try each possible combination mentally. Often only <strong>one arrangement</strong> avoids violating the three-in-a-row rule.</p>
+                <div class="info-card accent-green">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>Example (8-cell row):</strong><br>
+                        <span class="cell-inline one">1</span>
+                        <span class="cell-inline zero">0</span>
+                        <span class="cell-inline one">1</span>
+                        <span class="cell-inline one">1</span>
+                        <span class="cell-inline zero">0</span>
+                        <span class="cell-inline empty">?</span>
+                        <span class="cell-inline zero">0</span>
+                        <span class="cell-inline empty">?</span>
+                        <br>Count: three 1s, three 0s. Need 1 more of each.
+                        <br>Cell 6: if 0 → three 0s in a row (cells 5,6,7) — impossible! → must be 1.
+                        <br>Cell 8: must then be 0. Solved!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Parity -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge intermediate">Intermediate</span> Strategy 8: Gap Analysis</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>When a line has a <strong>single gap</strong> between two known regions, the gap is often forced by both the no-three-in-a-row rule and the equal-count rule simultaneously.</p>
+                <p>For an 8×8 puzzle, each row/column has <strong>4 zeros and 4 ones</strong>. Keeping a running count as you scan lets you instantly know what's forced.</p>
+                <div class="info-card accent-yellow">
+                    <div class="info-icon">★</div>
+                    <div>
+                        <strong>Pro Tip:</strong> Develop the habit of mentally tallying as you scan. The moment one number reaches its maximum, every remaining cell is the other number.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 8x8 Walkthrough -->
+    <div class="content-block">
+        <h3 class="section-title">Practice: Solve an 8×8 Puzzle</h3>
+        <p>Use cross-referencing, counting, and the almost-full-line technique to solve this grid.</p>
+        <div class="walkthrough-container" id="walkthrough3">
+            <div class="puzzle-grid-wrapper">
+                <div class="puzzle-grid" id="walkthrough3Grid"></div>
+            </div>
+            <div class="walkthrough-controls">
+                <div class="walkthrough-step-info">
+                    <div class="step-counter">Step <span id="w3StepNum">0</span> / <span id="w3StepTotal">0</span></div>
+                    <div class="step-explanation" id="w3Explanation">Press "Next Step" to begin solving.</div>
+                </div>
+                <div class="walkthrough-buttons">
+                    <button class="btn btn-secondary" id="w3Prev" disabled>Previous</button>
+                    <button class="btn btn-primary" id="w3Next">Next Step</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--     CHAPTER 4: ADVANCED STRATEGIES (10)       -->
+<!-- ============================================ -->
+<section id="chapter-4" class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-number">Chapter 4</div>
+        <h2>Advanced Strategies</h2>
+        <p class="chapter-intro">Tackle 10×10 grids with uniqueness deductions and pattern recognition.</p>
+    </div>
+
+    <!-- Strategy: Uniqueness -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge advanced">Advanced</span> Strategy 9: Uniqueness Constraint</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>Remember Rule 3: no two rows (or columns) can be identical. This becomes a <strong>powerful deduction tool</strong> on larger grids.</p>
+                <div class="info-card accent-purple">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>How to use it:</strong>
+                        <ol>
+                            <li>Find two rows that are <strong>almost identical</strong> — matching in all but 2 cells.</li>
+                            <li>Those 2 cells <em>must differ</em> between the two rows.</li>
+                            <li>This often forces the values of those cells.</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="strategy-visual">
+                <div class="uniqueness-demo">
+                    <div class="uniq-row">
+                        <span class="uniq-label">Row A:</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm empty highlight-cell">?</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm empty highlight-cell">?</span>
+                    </div>
+                    <div class="uniq-row">
+                        <span class="uniq-label">Row B:</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm one">1</span>
+                        <span class="cell-sm zero">0</span>
+                        <span class="cell-sm zero">0</span>
+                    </div>
+                    <div class="uniq-note">Row A's unknowns can't be (1,0) — that would duplicate Row B! So they must differ.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Segment Pattern -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge advanced">Advanced</span> Strategy 10: Segment Pattern Matching</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>In a 10×10 grid (5 zeros, 5 ones per line), certain <strong>partially-filled segments</strong> can only be completed in one way.</p>
+                <div class="info-card accent-blue">
+                    <div class="info-icon">i</div>
+                    <div>
+                        <strong>Key patterns to memorize:</strong>
+                        <ul>
+                            <li><strong>_ _ 0 0 _</strong> → The two blanks before the pair and the one after have limited options. If the line also needs a specific count, this can force values.</li>
+                            <li><strong>1 _ _ 1</strong> → The two middle cells must be <em>0,0</em> or <em>0,1</em> or <em>1,0</em> (but NOT <em>1,1</em>). Combined with counting, this often resolves.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Locked Candidates -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge advanced">Advanced</span> Strategy 11: Locked Candidates</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>When a value is <strong>forced in certain positions</strong> of a row, those positions' columns gain information — and vice versa. This is the Binaro equivalent of Sudoku's "locked candidates."</p>
+                <div class="info-card accent-green">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>Example:</strong> If Row 3 must have its remaining two 1s in columns 5 and 8 (all other positions are 0 or violate rules), then:
+                        <ul>
+                            <li>Column 5 at row 3 → definitely 1</li>
+                            <li>Column 8 at row 3 → definitely 1</li>
+                        </ul>
+                        This cascades into new deductions in those columns.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Complement Pairs -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge advanced">Advanced</span> Strategy 12: Complement Thinking</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>If you know a row and its "complement" (flip all 0s↔1s) would both be valid, but one is <strong>already taken</strong> by another row, then the complement must be used (or vice versa).</p>
+                <p>This is particularly useful in 10×10 and larger grids where many rows share similar structures.</p>
+                <div class="info-card accent-yellow">
+                    <div class="info-icon">★</div>
+                    <div>
+                        <strong>Key Insight:</strong> Two rows that are exact complements of each other are always legal (they're maximally different). But if you see a nearly complete row whose complement is already used, the remaining cells are constrained by uniqueness.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Difficulty Comparison -->
+    <div class="content-block">
+        <h3 class="section-title">The Complexity Jump: 8×8 vs 10×10</h3>
+        <div class="comparison-table-wrapper">
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th>8×8</th>
+                        <th>10×10</th>
+                        <th>Impact</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Total cells</td>
+                        <td>64</td>
+                        <td>100</td>
+                        <td class="impact-high">+56% more cells</td>
+                    </tr>
+                    <tr>
+                        <td>Values per line</td>
+                        <td>4 / 4</td>
+                        <td>5 / 5</td>
+                        <td class="impact-med">More combos per line</td>
+                    </tr>
+                    <tr>
+                        <td>Unique lines needed</td>
+                        <td>8 rows + 8 cols</td>
+                        <td>10 rows + 10 cols</td>
+                        <td class="impact-high">Uniqueness critical</td>
+                    </tr>
+                    <tr>
+                        <td>Typical givens</td>
+                        <td>20–30</td>
+                        <td>25–40</td>
+                        <td class="impact-med">More deduction steps</td>
+                    </tr>
+                    <tr>
+                        <td>Strategies needed</td>
+                        <td>Basic + some intermediate</td>
+                        <td>All intermediate + advanced</td>
+                        <td class="impact-high">Multi-technique chains</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--    CHAPTER 5: EXPERT STRATEGIES (12-14)       -->
+<!-- ============================================ -->
+<section id="chapter-5" class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-number">Chapter 5</div>
+        <h2>Expert &amp; Master Strategies</h2>
+        <p class="chapter-intro">Conquer 12×12 and the ultimate 14×14 grids with deep logical deductions.</p>
+    </div>
+
+    <!-- Strategy: Chain Deduction -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge expert">Expert</span> Strategy 13: Chain Deductions</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>On 12×12 and 14×14 grids, simple one-step deductions often aren't enough. You need <strong>chains</strong> — where placing one value forces a cascading sequence.</p>
+                <div class="info-card accent-purple">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>How chains work:</strong>
+                        <ol>
+                            <li>Place a tentative value in an empty cell.</li>
+                            <li>Follow all forced consequences (caps, counts, sandwiches).</li>
+                            <li>If you reach a contradiction → the tentative value was wrong → place the opposite.</li>
+                            <li>If no contradiction → you may still learn something from the chain.</li>
+                        </ol>
+                    </div>
+                </div>
+                <p>Chains can span multiple rows and columns. The key skill is <strong>tracing the implications</strong> without losing track.</p>
+            </div>
+            <div class="strategy-visual">
+                <div class="chain-diagram">
+                    <div class="chain-step">
+                        <div class="chain-badge">Assume</div>
+                        <div class="chain-desc">Cell (3,5) = <span class="cell-inline one">1</span></div>
+                    </div>
+                    <div class="chain-arrow">↓</div>
+                    <div class="chain-step">
+                        <div class="chain-badge">Forces</div>
+                        <div class="chain-desc">Cell (3,6) = <span class="cell-inline zero">0</span> (pair cap)</div>
+                    </div>
+                    <div class="chain-arrow">↓</div>
+                    <div class="chain-step">
+                        <div class="chain-badge">Forces</div>
+                        <div class="chain-desc">Column 6 needs 0 → Cell (7,6) = <span class="cell-inline one">1</span></div>
+                    </div>
+                    <div class="chain-arrow">↓</div>
+                    <div class="chain-step contradiction">
+                        <div class="chain-badge">Contradiction!</div>
+                        <div class="chain-desc">Row 7 would have three 1s in a row!</div>
+                    </div>
+                    <div class="chain-arrow">↓</div>
+                    <div class="chain-step resolved">
+                        <div class="chain-badge">Therefore</div>
+                        <div class="chain-desc">Cell (3,5) = <span class="cell-inline zero">0</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Multi-Row Uniqueness -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge expert">Expert</span> Strategy 14: Multi-Row Uniqueness Analysis</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>In a 14×14 grid, there are 14 rows that must all be <strong>distinct</strong>. With 7 zeros and 7 ones per row, the total possible distinct rows is limited by the binary combinations C(14,7) = 3432. But with 14 rows to fill — and many cells given — your options narrow fast.</p>
+                <div class="info-card accent-blue">
+                    <div class="info-icon">i</div>
+                    <div>
+                        <strong>Technique:</strong>
+                        <ul>
+                            <li>List out all <strong>nearly-complete rows</strong> (those with ≤3 empty cells).</li>
+                            <li>For each, enumerate the valid completions (respecting three-in-a-row and count).</li>
+                            <li>Eliminate completions that would <strong>duplicate</strong> an existing row.</li>
+                            <li>Often only one valid completion remains!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Parity Analysis -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge expert">Expert</span> Strategy 15: Parity &amp; Distribution Analysis</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>For 12×12 grids: 6 zeros and 6 ones per line. For 14×14: 7 and 7. You can use <strong>global parity</strong> — the total count of 0s and 1s across the entire grid — to cross-check your work.</p>
+                <div class="info-card accent-green">
+                    <div class="info-icon">!</div>
+                    <div>
+                        <strong>Global Check:</strong>
+                        <ul>
+                            <li>A 12×12 grid has 144 cells → exactly 72 zeros and 72 ones.</li>
+                            <li>A 14×14 grid has 196 cells → exactly 98 zeros and 98 ones.</li>
+                            <li>If your current fill has 68 zeros placed and 70 ones, you know the remaining 6 cells need 4 zeros and 2 ones.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: What-If -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge master">Master</span> Strategy 16: What-If Analysis (Bifurcation)</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>When all deterministic strategies are exhausted, use <strong>controlled bifurcation</strong>: pick a cell with the <em>most constraints</em> and try each value.</p>
+                <div class="info-card accent-red">
+                    <div class="info-icon">!!</div>
+                    <div>
+                        <strong>Discipline is key:</strong>
+                        <ol>
+                            <li>Choose a cell at the intersection of a <strong>nearly-full row</strong> and a <strong>nearly-full column</strong>.</li>
+                            <li>Try value <span class="cell-inline zero">0</span>. Apply all forced deductions.</li>
+                            <li>If contradiction → place <span class="cell-inline one">1</span> and continue.</li>
+                            <li>If no contradiction in either direction, go deeper — but <em>mark your assumption</em> so you can backtrack.</li>
+                        </ol>
+                    </div>
+                </div>
+                <p><strong>Most well-designed Binaro puzzles shouldn't require bifurcation.</strong> If you find yourself needing it, double-check that you haven't missed a simpler deduction.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Symmetry -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge master">Master</span> Strategy 17: Symmetry Awareness</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>Many puzzle designers create grids with <strong>symmetric given patterns</strong> (rotational or reflective). While the <em>solution</em> isn't symmetric, the <em>difficulty distribution</em> often is.</p>
+                <div class="info-card accent-yellow">
+                    <div class="info-icon">★</div>
+                    <div>
+                        <strong>Practical Use:</strong> If you solve one corner easily but get stuck on the opposite corner, revisit the techniques that worked — the same strategy type often applies on the other side.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Strategy: Row/Column Interaction -->
+    <div class="content-block">
+        <h3 class="section-title"><span class="strat-badge master">Master</span> Strategy 18: Multi-Constraint Intersection</h3>
+        <div class="strategy-layout">
+            <div class="strategy-text">
+                <p>The ultimate technique: consider <strong>three or more constraints simultaneously</strong>.</p>
+                <div class="info-card accent-purple">
+                    <div class="info-icon">!</div>
+                    <div>
+                        For a single cell, ask:
+                        <ol>
+                            <li>What does the <strong>row's three-in-a-row rule</strong> allow?</li>
+                            <li>What does the <strong>column's three-in-a-row rule</strong> allow?</li>
+                            <li>What does the <strong>row's count</strong> require?</li>
+                            <li>What does the <strong>column's count</strong> require?</li>
+                            <li>Would either value create a <strong>duplicate row</strong>?</li>
+                            <li>Would either value create a <strong>duplicate column</strong>?</li>
+                        </ol>
+                        The intersection of all these constraints often yields a single answer.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Master Strategy Map -->
+    <div class="content-block">
+        <h3 class="section-title">Strategy Decision Flowchart</h3>
+        <div class="flowchart">
+            <div class="flow-node flow-start">Start: Pick an empty cell</div>
+            <div class="flow-arrow">↓</div>
+            <div class="flow-node flow-decision">Are there adjacent pairs?</div>
+            <div class="flow-branches">
+                <div class="flow-branch">
+                    <div class="flow-branch-label">Yes</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-node flow-action">Apply Sandwich / Cap</div>
+                </div>
+                <div class="flow-branch">
+                    <div class="flow-branch-label">No</div>
+                    <div class="flow-arrow">↓</div>
+                    <div class="flow-node flow-decision">Is any line full on one number?</div>
+                    <div class="flow-branches">
+                        <div class="flow-branch">
+                            <div class="flow-branch-label">Yes</div>
+                            <div class="flow-arrow">↓</div>
+                            <div class="flow-node flow-action">Fill remaining with other number</div>
+                        </div>
+                        <div class="flow-branch">
+                            <div class="flow-branch-label">No</div>
+                            <div class="flow-arrow">↓</div>
+                            <div class="flow-node flow-decision">Almost-full line (≤3 empty)?</div>
+                            <div class="flow-branches">
+                                <div class="flow-branch">
+                                    <div class="flow-branch-label">Yes</div>
+                                    <div class="flow-arrow">↓</div>
+                                    <div class="flow-node flow-action">Enumerate &amp; eliminate</div>
+                                </div>
+                                <div class="flow-branch">
+                                    <div class="flow-branch-label">No</div>
+                                    <div class="flow-arrow">↓</div>
+                                    <div class="flow-node flow-action">Cross-ref / Uniqueness / Chain</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--          CHAPTER 6: INTERACTIVE PRACTICE      -->
+<!-- ============================================ -->
+<section id="chapter-6" class="chapter">
+    <div class="chapter-header">
+        <div class="chapter-number">Chapter 6</div>
+        <h2>Interactive Practice</h2>
+        <p class="chapter-intro">Test your skills with playable puzzles at every difficulty level.</p>
+    </div>
+
+    <div class="content-block">
+        <h3 class="section-title">Choose Your Puzzle</h3>
+        <div class="practice-selector">
+            <button class="practice-btn active" data-size="4">4×4</button>
+            <button class="practice-btn" data-size="6">6×6</button>
+            <button class="practice-btn" data-size="8">8×8</button>
+            <button class="practice-btn" data-size="10">10×10</button>
+            <button class="practice-btn" data-size="12">12×12</button>
+            <button class="practice-btn" data-size="14">14×14</button>
+        </div>
+    </div>
+
+    <div class="content-block">
+        <div class="practice-area" id="practiceArea">
+            <div class="practice-toolbar">
+                <div class="practice-info">
+                    <span id="practiceSize">4×4</span>
+                    <span class="separator">|</span>
+                    <span id="practiceStatus">Click cells to cycle: empty → 0 → 1</span>
+                </div>
+                <div class="practice-actions">
+                    <button class="btn btn-secondary btn-sm" id="checkBtn">Check Solution</button>
+                    <button class="btn btn-secondary btn-sm" id="hintBtn">Get Hint</button>
+                    <button class="btn btn-secondary btn-sm" id="resetBtn">Reset</button>
+                    <button class="btn btn-primary btn-sm" id="newPuzzleBtn">New Puzzle</button>
+                </div>
+            </div>
+            <div class="practice-grid-wrapper">
+                <div class="puzzle-grid practice-grid" id="practiceGrid"></div>
+            </div>
+            <div class="practice-feedback" id="practiceFeedback"></div>
+        </div>
+    </div>
+
+    <!-- Quick Reference -->
+    <div class="content-block">
+        <h3 class="section-title">Quick Reference Card</h3>
+        <div class="ref-cards">
+            <div class="ref-card">
+                <h4>Beginner Moves</h4>
+                <ul>
+                    <li><strong>Sandwich:</strong> X _ X → X <em>Y</em> X</li>
+                    <li><strong>Cap:</strong> _ X X _ → <em>Y</em> X X <em>Y</em></li>
+                    <li><strong>Count:</strong> Line full of X? → fill Y</li>
+                    <li><strong>Edge:</strong> X X _ → X X <em>Y</em></li>
+                </ul>
+            </div>
+            <div class="ref-card">
+                <h4>Intermediate Moves</h4>
+                <ul>
+                    <li><strong>Cross-ref:</strong> Check both row &amp; column</li>
+                    <li><strong>Almost-full:</strong> ≤3 empty → enumerate</li>
+                    <li><strong>Gap analysis:</strong> Single gap between knowns</li>
+                    <li><strong>Double-pair:</strong> Two empties, forced by rules</li>
+                </ul>
+            </div>
+            <div class="ref-card">
+                <h4>Advanced / Expert</h4>
+                <ul>
+                    <li><strong>Uniqueness:</strong> No duplicate rows/cols</li>
+                    <li><strong>Chains:</strong> Follow forced cascades</li>
+                    <li><strong>Complement:</strong> Row vs its inverse</li>
+                    <li><strong>Multi-constraint:</strong> All rules at once</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============================================ -->
+<!--                  FOOTER                      -->
+<!-- ============================================ -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-grid">
+            <span class="footer-cell c0"></span><span class="footer-cell c1"></span>
+            <span class="footer-cell c1"></span><span class="footer-cell c0"></span>
+        </div>
+        <p>Binaro Puzzle Guide — From Beginner to Master</p>
+        <p class="footer-sub">Built with logic and patience.</p>
+    </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
