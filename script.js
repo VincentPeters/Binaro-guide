@@ -5,6 +5,9 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+    // Enable JS-dependent styles (scroll animations)
+    document.documentElement.classList.add('js');
+
     // ========================================
     // NAVIGATION
     // ========================================
@@ -16,13 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
         navbar.classList.toggle('scrolled', window.scrollY > 20);
     });
 
-    navToggle.addEventListener('click', () => {
-        navLinks.classList.toggle('open');
-    });
+    if (navToggle && navLinks) {
+        navToggle.setAttribute('aria-controls', 'navLinks');
+        navToggle.setAttribute('aria-expanded', 'false');
 
-    navLinks.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', () => navLinks.classList.remove('open'));
-    });
+        navToggle.addEventListener('click', () => {
+            const isOpen = navLinks.classList.toggle('open');
+            navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('open');
+                navToggle.setAttribute('aria-expanded', 'false');
+            });
+        });
+    }
 
     // ========================================
     // SCROLL ANIMATIONS
@@ -299,26 +311,26 @@ document.addEventListener('DOMContentLoaded', () => {
     // WALKTHROUGH 2: 6×6 Puzzle
     // ========================================
     // Puzzle:
-    //   _  _  1  _  0  _
-    //   _  0  _  _  _  1
-    //   1  _  _  0  _  _
-    //   _  _  0  _  _  0
-    //   0  _  _  _  1  _
-    //   _  1  _  1  _  _
+    //   _  0  _  _  _  _
+    //   _  _  _  1  _  0
+    //   _  _  0  _  _  _
+    //   _  _  _  _  _  0
+    //   _  1  0  _  _  _
+    //   1  _  0  _  1  _
     // Solution:
     //   0  0  1  1  0  1
-    //   0  0  1  0  1  1
+    //   1  0  1  1  0  0
+    //   0  1  0  0  1  1
+    //   1  0  1  0  1  0
+    //   0  1  0  1  0  1
     //   1  1  0  0  1  0
-    //   1  1  0  1  0  0
-    //   0  1  1  0  1  0
-    //   1  0  0  1  0  1
     const w2Initial = [
-        [null, null, 1,    null, 0,    null],
-        [null, 0,    null, null, null, 1   ],
-        [1,    null, null, 0,    null, null],
-        [null, null, 0,    null, null, 0   ],
-        [0,    null, null, null, 1,    null],
-        [null, 1,    null, 1,    null, null]
+        [null, 0,    null, null, null, null],
+        [null, null, null, 1,    null, 0   ],
+        [null, null, 0,    null, null, null],
+        [null, null, null, null, null, 0   ],
+        [null, 1,    0,    null, null, null],
+        [1,    null, 0,    null, 1,    null]
     ];
 
     createWalkthrough({
@@ -330,75 +342,66 @@ document.addEventListener('DOMContentLoaded', () => {
         cellSize: 48,
         steps: [
             {
-                placements: [{ r: 0, c: 0, v: 0 }, { r: 0, c: 1, v: 0 }],
-                explanation: 'Row 1 has 1 at col 3, 0 at col 5. Col 1 has 1 in row 3, 0 in row 5 — needs balance. With the existing 1 and 0 in row 1, the first two cells are forced to 0,0.',
-                highlight: [[0, 2], [0, 4]]
+                placements: [{ r: 0, c: 0, v: 0 }],
+                explanation: 'Column 1 has a 1 at row 5. Row 1 has a 0 at col 2. Looking at col 1: it needs three 0s and three 1s. Placing 0 here starts building the balance.',
+                highlight: [[0, 1]]
             },
             {
-                placements: [{ r: 0, c: 3, v: 1 }, { r: 0, c: 5, v: 1 }],
-                explanation: 'Row 1: 0,0,1,_,0,_. Already has two 0s in the first two positions. Needs 3 ones total and already has 1. Cap: after 0,0 we placed 1. Remaining cells must give us total 3 ones → positions 4 and 6 = 1.',
+                placements: [{ r: 0, c: 2, v: 1 }, { r: 0, c: 3, v: 1 }],
+                explanation: 'Row 1: 0,0,_,_,_,_. After two 0s (cols 1-2), col 3 must cap → 1. Then col 4: we can place another 1 (two 1s adjacent is fine, just not three).',
+                highlight: [[0, 0], [0, 1]]
             },
             {
-                placements: [{ r: 1, c: 0, v: 0 }],
-                explanation: 'Column 1: has 0 (row 1). Row 2 starts with _. Col 1 needs three 0s and three 1s. With 0 at row 1 and 1 at row 3, placing 0 here is valid (two 0s in a row, not three).',
-                highlight: [[0, 0], [2, 0]]
+                placements: [{ r: 0, c: 4, v: 0 }, { r: 0, c: 5, v: 1 }],
+                explanation: 'Row 1: 0,0,1,1,_,_. After two 1s (cols 3-4), col 5 must cap → 0. Count: three 0s, two 1s → col 6 = 1. Row 1 complete: 0,0,1,1,0,1.',
+                highlight: [[0, 2], [0, 3]]
+            },
+            {
+                placements: [{ r: 1, c: 0, v: 1 }, { r: 1, c: 1, v: 0 }],
+                explanation: 'Column 1: 0,_,... Row 2 starts with _,_,_,1. Col 1 has 0 at row 1 — placing 1 avoids 0,0,0 vertically. Col 2: has 0 (row 1), placing 0 here gives 0,0 which is valid (capped next).',
             },
             {
                 placements: [{ r: 1, c: 2, v: 1 }],
-                explanation: 'Column 3: has 1 (row 1), 0 (row 3/4). Row 2: 0,0,_... After two 0s, cannot place a third 0 → must be 1! (Pair cap rule)',
-                highlight: [[1, 0], [1, 1]]
+                explanation: 'Row 2: 1,0,_,1,_,0. After col 2 = 0, we can\'t have three 0s (col 2 only has two). Col 3 cross-ref: col 3 has 1 (row 1), can take 0 or 1. But row 2 has 0,_,1 — placing 1 at col 3 gives 0,1,1 (valid pair). Count needs balance.',
+                highlight: [[1, 1]]
             },
             {
-                placements: [{ r: 1, c: 3, v: 0 }],
-                explanation: 'Row 2: 0,0,1,_,_,1. Already two 0s and two 1s. Col 4 has 1 (row 1), 0 (row 3), so both values possible. But row 2 cells 3,4 are 1,_ and cell 6 is 1 — if cell 4 were 1, we\'d have 1,_,1 needing care. Count says we need one 0 and one 1 more → cell 4 = 0.',
+                placements: [{ r: 1, c: 4, v: 0 }],
+                explanation: 'Row 2: 1,0,1,1,_,0. Count: three 1s already → remaining cell must be 0. Row 2 complete: 1,0,1,1,0,0.',
             },
             {
-                placements: [{ r: 1, c: 4, v: 1 }],
-                explanation: 'Row 2 now: 0,0,1,0,_,1. Three 0s already → remaining cell must be 1.',
-            },
-            {
-                placements: [{ r: 2, c: 1, v: 1 }],
-                explanation: 'Column 2: 0,0,_,_,_,1. After two 0s at top, must cap with 1 (no three 0s in a row!).',
+                placements: [{ r: 2, c: 0, v: 0 }, { r: 2, c: 1, v: 1 }],
+                explanation: 'Column 1: 0,1,_,... Can place 0 (no three in a row since prior was 0,1). Column 2: 0,0,_,... After two 0s, must cap with 1!',
                 highlight: [[0, 1], [1, 1]]
             },
             {
-                placements: [{ r: 2, c: 2, v: 0 }],
-                explanation: 'Row 3: 1,1,_,0,_,_. After two 1s, the next cell must be 0 (cap rule).',
-                highlight: [[2, 0], [2, 1]]
+                placements: [{ r: 2, c: 3, v: 0 }, { r: 2, c: 4, v: 1 }, { r: 2, c: 5, v: 1 }],
+                explanation: 'Row 3: 0,1,0,_,_,_. Count: two 0s, one 1. Need one more 0 and two more 1s. Col 4 has 1,1 (rows 1-2), so col 4 can\'t be 1 (would make three). Col 4 = 0. Then cols 5,6 must be 1,1. Check: row ends ...0,1,1 — pair at end is valid. Row 3: 0,1,0,0,1,1.',
+                highlight: [[0, 3], [1, 3]]
             },
             {
-                placements: [{ r: 2, c: 4, v: 1 }, { r: 2, c: 5, v: 0 }],
-                explanation: 'Row 3: 1,1,0,0,_,_. Has three 0s (max) if we add another. Count: two 1s, two 0s so far. Need one more 1 and one more 0. After two 0s (cols 3,4), next must not be 0 → col 5 = 1. Then col 6 = 0.',
-                highlight: [[2, 2], [2, 3]]
+                placements: [{ r: 3, c: 0, v: 1 }, { r: 3, c: 1, v: 0 }],
+                explanation: 'Column 1: 0,1,0,_,_,1. Pattern is alternating. After 0 at row 3, placing 1 at row 4 avoids 0,0,0 and maintains balance. Col 2: 0,0,1,_,1,_ — after 1 at row 3, placing 0 at row 4 is needed (col 2 already has two 0s and one 1, can take one more 0).',
             },
             {
-                placements: [{ r: 3, c: 0, v: 1 }, { r: 3, c: 1, v: 1 }],
-                explanation: 'Column 1: 0,0,1,_,0,_. Col 2: 0,0,1,_,_,1. Row 4: _,_,0,_,_,0. Col 1 at row 4: after the pattern needs 1. Col 2 at row 4 similarly resolves to 1.',
+                placements: [{ r: 3, c: 2, v: 1 }, { r: 3, c: 3, v: 0 }],
+                explanation: 'Row 4: 1,0,_,_,_,0. Col 3 has 1,1,0 (rows 1-3) — two 1s, one 0. Can take more of either. Row 4 needs balance: after 1,0 placing 1 at col 3 (no three in a row with 0,1). Col 4 = 0 (cap after 1, and three 0s in row reached? No: 1,0,1,0 = two 0s, two 1s. Need one more of each. Col 5: col 5 has 0,0,1 → two 0s, can only add 1. Col 6 = 0 (given). That makes row: 1,0,1,0,1,0 ✓.',
             },
             {
-                placements: [{ r: 3, c: 3, v: 1 }, { r: 3, c: 4, v: 0 }],
-                explanation: 'Row 4: 1,1,0,_,_,0. Two 1s and two 0s so far. Need one 1 and one 0 more. After 0 at col 3, col 6 is 0 — if col 5 were 0, three 0s (cols 3,5,6). So col 4 = 1, col 5 = 0.',
+                placements: [{ r: 3, c: 4, v: 1 }],
+                explanation: 'Row 4: 1,0,1,0,_,0. Three 0s already → remaining cell is 1. Row 4 complete: 1,0,1,0,1,0.',
             },
             {
-                placements: [{ r: 4, c: 1, v: 1 }],
-                explanation: 'Column 2: 0,0,1,1,_,1. Has three 1s already → position 5 must be 0. Wait — that gives two 0s at rows 1,2 and one at row 5. Actually, count: three 1s placed → needs zero more. Remaining = 0. But let\'s check: four 1s would exceed max. Three 1s already → cell must be 0. Hmm, re-count: row 1=0, row 2=0, row 3=1, row 4=1, row 6=1. That\'s three 1s → row 5 must be 0. But row 5 starts with 0,_... if we put 0, that\'s 0,0 — valid. Actually checking row 5: 0,_,_,_,1,_. Needs three 0s and three 1s. Already has one 0 and one 1. Col 2 forces this to 0... wait, that gives 0,0 start. Let me re-examine. Col 2: 0,0,1,1,_,1 → three 1s = max → must be 0. But 0,0 at rows 1-2 and row 5 would be fine (not consecutive). Actually row 5 col 2 = 0 would give row 5: 0,0,... two 0s → need cap at col 3. Let\'s place 1 instead based on row constraints. Hmm — going with column count: three 1s max → this is 0. No wait, I\'ll trust the solution: it\'s 1.',
+                placements: [{ r: 4, c: 0, v: 0 }, { r: 4, c: 3, v: 1 }],
+                explanation: 'Column 1: 0,1,0,1,_,1. Three 1s already → must be 0. Row 5: 0,1,0,_,_,_. Col 4 has 1,1,0,0 — two each, either works. Row count: one 0 and one 1 placed. Placing 1 at col 4 is valid.',
             },
             {
-                placements: [{ r: 4, c: 2, v: 1 }],
-                explanation: 'Row 5: 0,1,_,_,1,_. Column 3: 1,1,0,0,_,_. After two 0s, can place 1 (valid). Row needs it for balance.',
-                highlight: [[2, 2], [3, 2]]
+                placements: [{ r: 4, c: 4, v: 0 }, { r: 4, c: 5, v: 1 }],
+                explanation: 'Row 5: 0,1,0,1,_,_. Count: two 0s, two 1s. Need one more of each. Col 5: has 0,0,1,1 — balanced, either works. But row 5: after 0,1,0,1 — col 5 = 0 (if 1, then 1,1 and col 6 must be 0, giving row 0,1,0,1,1,0; check uniqueness). Col 5 = 0, col 6 = 1. Row 5: 0,1,0,1,0,1.',
             },
             {
-                placements: [{ r: 4, c: 3, v: 0 }, { r: 4, c: 5, v: 0 }],
-                explanation: 'Row 5: 0,1,1,_,1,_. Already has three 1s → remaining two cells must be 0. Row 5 complete: 0,1,1,0,1,0.',
-            },
-            {
-                placements: [{ r: 5, c: 0, v: 1 }],
-                explanation: 'Column 1: 0,0,1,1,0,_. Two 0s from rows 1-2, two 1s from rows 3-4, one 0 from row 5. Count: three 0s, two 1s → needs 1.',
-            },
-            {
-                placements: [{ r: 5, c: 2, v: 0 }, { r: 5, c: 4, v: 0 }, { r: 5, c: 5, v: 1 }],
-                explanation: 'Row 6: 1,1,_,1,_,_. Three 1s already → all remaining cells are 0. Wait — needs three 0s. Cols 3,5,6: check each column count to confirm. Col 3: needs one more 0 ✓. Col 5: needs one more 0 ✓. Col 6: has 1,1,0,0,0 → three 0s already, needs 1! So: row 6 = 1,1,0,1,0,1. Nope — row has four 1s. Re-checking solution: 1,0,0,1,0,1 → three 1s, three 0s ✓. The given 1 at col 2 stays. Final: 1,0,0,1,0,1. Puzzle solved!',
+                placements: [{ r: 5, c: 1, v: 1 }, { r: 5, c: 3, v: 0 }, { r: 5, c: 5, v: 0 }],
+                explanation: 'Row 6: 1,_,0,_,1,_. Col 2: 0,0,1,0,1,_ — three 0s, two 1s → needs 1. Col 4: 1,1,0,0,1,_ — three 1s already → needs 0. Col 6: 1,0,1,0,1,_ — three 1s, two 0s → needs 0. Row 6: 1,1,0,0,1,0. Puzzle solved!',
             },
         ]
     });
@@ -418,10 +421,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     // Solution:
-    // 0 0 1 1 0 0 1 1
+    // 0 1 1 0 1 0 1 0
     // 1 0 0 1 0 1 0 1
-    // 0 1 0 1 1 0 0 1  -- wait, let me construct a valid 8x8 solution
-    // Actually let me provide a simpler walkthrough with fewer steps for 8x8
+    // 1 0 0 1 1 0 0 1
+    // 0 1 1 0 0 1 1 0
+    // 0 1 0 1 0 1 0 1
+    // 1 0 1 0 1 0 1 0
+    // 0 1 0 1 1 0 1 0
+    // 1 0 1 0 0 1 0 1
 
     createWalkthrough({
         gridId: 'walkthrough3Grid',
@@ -432,76 +439,75 @@ document.addEventListener('DOMContentLoaded', () => {
         cellSize: 44,
         steps: [
             {
-                placements: [{ r: 0, c: 0, v: 0 }, { r: 0, c: 1, v: 0 }],
-                explanation: 'Row 1 has a 1 at col 3 and 0 at col 6. Column 1 has a 1 at row 2 and 0 at row 5 — after cross-referencing, the first two cells resolve to 0, 0.',
+                placements: [{ r: 0, c: 0, v: 0 }, { r: 0, c: 1, v: 1 }],
+                explanation: 'Row 1 has a 1 at col 3 and 0 at col 6. Column 2: has no values yet but col 1 has 1 (row 2) and 0 (row 5). Cross-referencing column counts with row needs gives us 0 at col 1 and 1 at col 2.',
             },
             {
-                placements: [{ r: 0, c: 3, v: 1 }],
-                explanation: 'Row 1: 0,0,1,_,...  After 0,0 the pair is capped by the 1. The sandwich pattern (1,_) with column analysis forces this to 1.',
-                highlight: [[0, 2]]
+                placements: [{ r: 0, c: 3, v: 0 }],
+                explanation: 'Row 1: 0,1,1,_,_,0,_,_. After two 1s at cols 2-3, col 4 must cap the pair → 0.',
+                highlight: [[0, 1], [0, 2]]
             },
             {
-                placements: [{ r: 0, c: 4, v: 0 }, { r: 0, c: 6, v: 1 }, { r: 0, c: 7, v: 1 }],
-                explanation: 'Row 1: 0,0,1,1,_,0,_,_. Two 1s and two 0s placed (of 4 each needed). After two 1s at cols 3-4, col 5 must cap → 0 ✓ (already given). Remaining cols 7,8: need two more 1s → both are 1.',
+                placements: [{ r: 0, c: 4, v: 1 }, { r: 0, c: 6, v: 1 }, { r: 0, c: 7, v: 0 }],
+                explanation: 'Row 1: 0,1,1,0,_,0,_,_. Count: two 1s, two 0s placed. Need two more 1s and two more 0s. After 0 at col 4 would make 0,0 (cols 4,6) — possible, but col 5 is already 0, so col 5,6 would be 0,0. Place 1 at col 5. Then cols 7,8: need one 1 and one 0. Col 7 = 1, col 8 = 0 (placing 0 at col 7 would create 0,0,0 with cols 6,8).',
             },
             {
-                placements: [{ r: 1, c: 1, v: 0 }],
-                explanation: 'Column 2: 0,_,...  Row 2: 1,_,... Column 2 at row 2: checking column count and row neighbors, 0 fits without violating any rule.',
-            },
-            {
-                placements: [{ r: 1, c: 2, v: 0 }],
-                explanation: 'Row 2: 1,0,_,...  Column 3: 1,_,... Only one 1 in col 3 so far. But row 2 at col 3: after 1,0 we can place 0 (no three in row — it\'d be 0,0 which is fine if capped).',
+                placements: [{ r: 1, c: 1, v: 0 }, { r: 1, c: 2, v: 0 }],
+                explanation: 'Row 2: 1,_,_,_,0,_,_,1. Column 2: 1,_ — can be 0 or 1. Column 3: 1,_ — can be 0 or 1. Row 2 after 1: placing 0,0 gives 1,0,0 which is valid (capped by the 1). Cross-referencing column counts confirms.',
+                highlight: [[1, 0]]
             },
             {
                 placements: [{ r: 1, c: 3, v: 1 }],
-                explanation: 'Row 2: 1,0,0,_,0,...  After two 0s (cols 2-3), must cap → 1. Confirmed by column 4 needing more 1s.',
+                explanation: 'Row 2: 1,0,0,_,0,_,_,1. After two 0s (cols 2-3), col 4 must cap → 1.',
                 highlight: [[1, 1], [1, 2]]
             },
             {
                 placements: [{ r: 1, c: 5, v: 1 }, { r: 1, c: 6, v: 0 }],
-                explanation: 'Row 2: 1,0,0,1,0,_,_,1. Count: two 1s, three 0s. Need two more 1s and one more 0. Col 6: adjacent 0 (row 1 col 6 = 1), and 0 at col 5 row 1 — place 1. Col 7: row 1 already has 1 → placing 0 keeps column balanced.',
+                explanation: 'Row 2: 1,0,0,1,0,_,_,1. Count: three 1s, three 0s placed. Need one more 1 and one more 0. Col 6: if 1, then cols 4,6,8 = 0,1,1 — two 1s adjacent at end is ok. But col 7: if also 1, three 1s (cols 6,7,8). So col 6 = 1, col 7 = 0. Row complete: 1,0,0,1,0,1,0,1.',
             },
             {
-                placements: [{ r: 2, c: 0, v: 0 }, { r: 2, c: 1, v: 1 }],
-                explanation: 'Cross-referencing columns 1 and 2 with row 3. Col 1: 0,1,_→ can be 0 or 1. Col 2: 0,0,_ → after two 0s, must be 1! Then row 3 starts 0,1... (col 1 needs balance → 0).',
-                highlight: [[0, 1], [1, 1]]
+                placements: [{ r: 2, c: 0, v: 1 }, { r: 2, c: 1, v: 0 }],
+                explanation: 'Column 1: 0,1,_ — can be 0 or 1. Column 2: 1,0,_ — can be 0 or 1. Cross-referencing: col 1 has one 0, one 1 so far. Row 3 starts _,_,_,1. Checking col 1 count and row 3 neighbors → col 1 = 1, col 2 = 0.',
             },
             {
                 placements: [{ r: 2, c: 2, v: 0 }, { r: 2, c: 4, v: 1 }],
-                explanation: 'Row 3: 0,1,_,1,_,...,0,_. Col 3 has 1,0 in rows 1-2. Placing 0 here is valid. Then for col 5: row 3 needs balance, and after 0,1,0,1 pattern, col 5 = 1.',
+                explanation: 'Row 3: 1,0,_,1,_,_,0,_. Col 3 at row 3: after 1,0 we can place 0 (two 0s, not three). Col 5: row needs balance, col 5 has 1,0 → placing 1 is valid.',
             },
             {
-                placements: [{ r: 2, c: 5, v: 1 }, { r: 2, c: 7, v: 0 }],
-                explanation: 'Row 3: 0,1,0,1,1,_,0,_. Four 0s or 1s max. Count: two 1s in cols 2,4 plus one at col 4 = three 1s. Need one more 1 and two 0s wait — recount: cols giving 1: col 2=1, col 4=1, col 5=1 → three, plus 1 needed. Col 6=1 possible? Row check: after 1,1 (cols 4,5), col 6 can\'t be 1 → must be 0. Hmm that contradicts. Let me just assign from solution: col 6=1, col 8=0. Row total: 0,1,0,1,1,1,0,0 → four 1s, four 0s ✓. Three consecutive 1s at cols 4,5,6 — that VIOLATES Rule 1! So actual: col 6=0, col 8=0 → 0,1,0,1,1,0,0,0 → three 0s at end — also violates! Solution must be different. Trust the walkthrough: place 1 at col 6, 0 at col 8 with note that this creates a valid pattern.',
+                placements: [{ r: 2, c: 5, v: 0 }, { r: 2, c: 7, v: 1 }],
+                explanation: 'Row 3: 1,0,0,1,1,_,0,_. Count: three 1s, three 0s. After two 1s (cols 4-5), col 6 must cap → 0 (already given). Col 8: need one more 1 → must be 1. Row complete: 1,0,0,1,1,0,0,1.',
+                highlight: [[2, 3], [2, 4]]
             },
             {
-                placements: [
-                    { r: 3, c: 0, v: 0 }, { r: 3, c: 2, v: 0 },
-                    { r: 3, c: 3, v: 0 }, { r: 3, c: 4, v: 1 }, { r: 3, c: 6, v: 1 }
-                ],
-                explanation: 'Row 4: _,1,_,_,_,1,_,0. Using cross-referencing between all columns and the row\'s need for four 0s and four 1s, combined with no-three-in-a-row, the row resolves to: 0,1,0,0,1,1,1,0. Wait — three 1s at 5,6,7? The sandwich and cap rules constrain positions tightly on 8×8 grids. This is where intermediate strategies shine!',
+                placements: [{ r: 3, c: 0, v: 0 }, { r: 3, c: 2, v: 1 }, { r: 3, c: 3, v: 0 }],
+                explanation: 'Row 4: _,1,_,_,_,1,_,0. Col 1 has 0,1,1 — two 1s already at rows 1-3 but needs balance. Col 1 row 4 = 0. Then row 4: 0,1,_,_. Col 3: 1,0,0 — two 0s, so can be 0 or 1. Place 1 at col 3 (pair cap after 1). Col 4 = 0 (cap after 1,1 at cols 2-3).',
+                highlight: [[3, 1], [3, 5]]
             },
             {
-                placements: [
-                    { r: 4, c: 1, v: 1 }, { r: 4, c: 2, v: 1 },
-                    { r: 4, c: 4, v: 0 }, { r: 4, c: 5, v: 0 },
-                    { r: 4, c: 6, v: 1 }, { r: 4, c: 7, v: 0 }
-                ],
-                explanation: 'Row 5: 0,_,_,1,_,_,_,_. Column-by-column cross-referencing reveals forced values. This row demonstrates how multiple constraints intersect on 8×8 grids.',
+                placements: [{ r: 3, c: 4, v: 0 }, { r: 3, c: 6, v: 1 }],
+                explanation: 'Row 4: 0,1,1,0,_,1,_,0. Count: two 1s placed beyond givens. Need two more 0s and two more 1s total → wait, recount: 0,1,1,0 = two 1s, two 0s, plus given 1 at col 6 and 0 at col 8 = three 1s, three 0s. Need one more 1 and one more 0. Col 5 = 0 (after 1 at col 6, prevents 1,1). Col 7 = 1. Row: 0,1,1,0,0,1,1,0.',
             },
             {
                 placements: [
-                    { r: 5, c: 0, v: 0 }, { r: 5, c: 1, v: 0 },
-                    { r: 5, c: 3, v: 1 }, { r: 5, c: 4, v: 0 }, { r: 5, c: 7, v: 1 }
+                    { r: 4, c: 1, v: 1 }, { r: 4, c: 2, v: 0 },
+                    { r: 4, c: 4, v: 0 }, { r: 4, c: 5, v: 1 },
+                    { r: 4, c: 6, v: 0 }, { r: 4, c: 7, v: 1 }
                 ],
-                explanation: 'Row 6: Applying count completion — column counts narrow options, and pair capping resolves the rest. Row 6 resolves to: 0,0,1,1,0,0,1,1.',
+                explanation: 'Row 5: 0,_,_,1,_,_,_,_. Using cross-referencing: col 2 has 1,0,0,1 (rows 1-4) — two each, next must avoid three in a row. Col-by-col analysis with row counting resolves to: 0,1,0,1,0,1,0,1.',
             },
             {
                 placements: [
-                    { r: 6, c: 0, v: 1 }, { r: 6, c: 2, v: 0 },
-                    { r: 6, c: 3, v: 0 }, { r: 6, c: 5, v: 1 }, { r: 6, c: 6, v: 0 }
+                    { r: 5, c: 0, v: 1 }, { r: 5, c: 1, v: 0 },
+                    { r: 5, c: 3, v: 0 }, { r: 5, c: 4, v: 1 }, { r: 5, c: 7, v: 0 }
                 ],
-                explanation: 'Row 7: _,1,_,_,1,_,_,0. Cross-referencing ensures uniqueness — this row can\'t match any previous row. Combined with column counts: 1,1,0,0,1,1,0,0.',
+                explanation: 'Row 6: _,_,1,_,_,0,1,_. Column counts are getting tight — most columns have 3-4 values placed. Cross-referencing each column\'s remaining needs with the row\'s balance requirement resolves to: 1,0,1,0,1,0,1,0.',
+            },
+            {
+                placements: [
+                    { r: 6, c: 0, v: 0 }, { r: 6, c: 2, v: 0 },
+                    { r: 6, c: 3, v: 1 }, { r: 6, c: 5, v: 0 }, { r: 6, c: 6, v: 1 }
+                ],
+                explanation: 'Row 7: _,1,_,_,1,_,_,0. Uniqueness check — this row can\'t duplicate any previous row. Combined with column counts (each column nearing its quota), the row resolves to: 0,1,0,1,1,0,1,0.',
             },
             {
                 placements: [
@@ -509,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     { r: 7, c: 4, v: 0 }, { r: 7, c: 5, v: 1 },
                     { r: 7, c: 6, v: 0 }, { r: 7, c: 7, v: 1 }
                 ],
-                explanation: 'Row 8 (final): 1,_,_,0,_,_,_,_. All column counts are known — each column needs its final value. The uniqueness rule confirms this is the only valid completion. 8×8 puzzle solved!',
+                explanation: 'Row 8 (final): 1,_,_,0,_,_,_,_. Every column now needs exactly one more value to reach its quota of four 0s and four 1s. Each remaining cell is fully determined. Row 8: 1,0,1,0,0,1,0,1. Puzzle solved!',
             },
         ]
     });
@@ -536,20 +542,20 @@ document.addEventListener('DOMContentLoaded', () => {
         },
         6: {
             given: [
-                [null, null, 1,    null, 0,    null],
-                [null, 0,    null, null, null, 1   ],
-                [1,    null, null, 0,    null, null],
-                [null, null, 0,    null, null, 0   ],
-                [0,    null, null, null, 1,    null],
-                [null, 1,    null, 1,    null, null]
+                [null, 0,    null, null, null, null],
+                [null, null, null, 1,    null, 0   ],
+                [null, null, 0,    null, null, null],
+                [null, null, null, null, null, 0   ],
+                [null, 1,    0,    null, null, null],
+                [1,    null, 0,    null, 1,    null]
             ],
             solution: [
                 [0, 0, 1, 1, 0, 1],
-                [0, 0, 1, 0, 1, 1],
-                [1, 1, 0, 0, 1, 0],
-                [1, 1, 0, 1, 0, 0],
-                [0, 1, 1, 0, 1, 0],
-                [1, 0, 0, 1, 0, 1]
+                [1, 0, 1, 1, 0, 0],
+                [0, 1, 0, 0, 1, 1],
+                [1, 0, 1, 0, 1, 0],
+                [0, 1, 0, 1, 0, 1],
+                [1, 1, 0, 0, 1, 0]
             ]
         },
         8: {
@@ -564,14 +570,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 [1,    null, null, 0,    null, null, null, null]
             ],
             solution: [
-                [0, 0, 1, 1, 0, 0, 1, 1],
+                [0, 1, 1, 0, 1, 0, 1, 0],
                 [1, 0, 0, 1, 0, 1, 0, 1],
-                [0, 1, 0, 1, 1, 0, 0, 1],
-                [0, 1, 0, 0, 1, 1, 1, 0],
-                [0, 1, 1, 1, 0, 0, 1, 0],
-                [1, 0, 1, 0, 0, 0, 1, 1],
-                [1, 1, 0, 0, 1, 1, 0, 0],
-                [1, 0, 1, 0, 1, 1, 0, 0]
+                [1, 0, 0, 1, 1, 0, 0, 1],
+                [0, 1, 1, 0, 0, 1, 1, 0],
+                [0, 1, 0, 1, 0, 1, 0, 1],
+                [1, 0, 1, 0, 1, 0, 1, 0],
+                [0, 1, 0, 1, 1, 0, 1, 0],
+                [1, 0, 1, 0, 0, 1, 0, 1]
             ]
         },
         10: {
@@ -588,54 +594,52 @@ document.addEventListener('DOMContentLoaded', () => {
                 [0,    null, null, null, null, 1,    null, null, null, 0   ]
             ],
             solution: [
-                [1, 0, 1, 1, 0, 0, 0, 1, 1, 0],
-                [0, 1, 0, 0, 1, 0, 1, 0, 1, 1],
+                [0, 0, 1, 1, 0, 1, 0, 1, 0, 1],
+                [1, 1, 0, 0, 1, 0, 1, 0, 1, 0],
                 [0, 1, 0, 0, 1, 1, 0, 0, 1, 1],
-                [1, 0, 1, 0, 0, 1, 1, 0, 0, 1], // adjusted
-                [1, 0, 1, 1, 0, 1, 0, 1, 0, 0],
-                [1, 0, 0, 0, 1, 0, 1, 1, 0, 1],
-                [0, 1, 0, 1, 1, 0, 0, 0, 1, 1],
-                [0, 1, 1, 0, 0, 1, 0, 1, 1, 0],
-                [1, 0, 0, 1, 0, 0, 1, 1, 0, 1],
-                [0, 1, 1, 0, 1, 1, 0, 0, 1, 0]
+                [1, 0, 1, 1, 0, 0, 1, 1, 0, 0],
+                [0, 0, 1, 1, 0, 1, 1, 0, 0, 1],
+                [1, 1, 0, 0, 1, 0, 0, 1, 1, 0],
+                [1, 0, 0, 1, 1, 0, 0, 1, 0, 1],
+                [0, 1, 1, 0, 0, 1, 1, 0, 1, 0],
+                [1, 0, 0, 1, 0, 0, 1, 0, 1, 1],
+                [0, 1, 1, 0, 1, 1, 0, 1, 0, 0]
             ]
         },
         12: {
             given: (() => {
                 const g = Array.from({length:12}, () => Array(12).fill(null));
-                // Scatter some givens
                 const hints = [
-                    [0,1,1],[0,4,0],[0,8,1],[0,11,0],
-                    [1,0,0],[1,3,1],[1,7,0],[1,10,1],
-                    [2,2,1],[2,5,0],[2,9,1],
-                    [3,1,0],[3,6,1],[3,10,0],
-                    [4,0,1],[4,4,0],[4,8,1],[4,11,1],
-                    [5,2,0],[5,5,1],[5,9,0],
-                    [6,1,1],[6,4,1],[6,7,0],[6,11,1],
-                    [7,0,0],[7,3,0],[7,8,0],[7,10,1],
-                    [8,2,1],[8,6,0],[8,9,1],
-                    [9,1,0],[9,5,1],[9,8,1],[9,11,0],
-                    [10,0,1],[10,3,1],[10,7,0],[10,10,0],
-                    [11,2,0],[11,4,1],[11,9,0],[11,11,1]
+                    [0,3,0],[0,8,1],[0,9,1],[0,10,0],
+                    [1,0,1],[1,4,1],[1,9,0],[1,11,0],
+                    [2,4,1],[2,5,0],[2,6,0],[2,11,0],
+                    [3,2,1],[3,5,0],[3,6,1],[3,10,0],
+                    [4,1,0],[4,5,1],[4,10,0],
+                    [5,6,0],[5,7,1],[5,9,0],
+                    [6,2,0],[6,4,1],[6,8,0],[6,11,1],
+                    [7,6,1],[7,8,1],[7,9,1],
+                    [8,2,1],[8,7,1],[8,10,0],
+                    [9,2,0],[9,3,1],[9,5,0],
+                    [10,2,1],[10,7,1],[10,8,0],[10,9,1],
+                    [11,0,1],[11,6,1],[11,8,1]
                 ];
                 hints.forEach(([r,c,v]) => g[r][c] = v);
                 return g;
             })(),
             solution: (() => {
-                // A valid 12x12 solution (manually constructed)
                 return [
-                    [0,1,0,1,0,1,0,1,1,0,0,1], // Adjusted for validity
-                    [0,1,1,1,0,0,1,0,0,1,1,0],
-                    [1,0,1,0,1,0,0,1,0,1,0,1],
-                    [1,0,0,1,0,0,1,1,0,1,0,1], // Adjusted
-                    [1,0,1,0,0,1,0,0,1,1,0,1],
-                    [0,1,0,1,1,1,0,0,1,0,1,0],
-                    [0,1,0,0,1,0,1,0,1,1,0,1],
-                    [0,0,1,0,1,0,1,1,0,0,1,1],
-                    [1,1,1,0,0,1,0,0,1,1,0,0],
-                    [1,0,0,1,1,1,0,0,1,0,1,0], // Adjusted
-                    [1,0,0,1,0,0,1,0,1,1,0,1], // Adjusted
-                    [0,1,0,0,1,0,1,1,0,0,1,1]
+                    [0,0,1,0,0,1,1,0,1,1,0,1],
+                    [1,1,0,0,1,1,0,1,0,0,1,0],
+                    [1,1,0,1,1,0,0,1,0,0,1,0],
+                    [0,0,1,1,0,0,1,0,1,1,0,1],
+                    [1,0,1,0,0,1,1,0,0,1,0,1],
+                    [1,1,0,0,1,0,0,1,1,0,1,0],
+                    [0,1,0,1,1,0,0,1,0,0,1,1],
+                    [0,0,1,1,0,1,1,0,1,1,0,0],
+                    [1,0,1,0,1,0,0,1,1,0,0,1],
+                    [0,1,0,1,1,0,1,0,0,1,1,0],
+                    [0,1,1,0,0,1,0,1,0,1,0,1],
+                    [1,0,0,1,0,1,1,0,1,0,1,0]
                 ];
             })()
         },
@@ -663,20 +667,20 @@ document.addEventListener('DOMContentLoaded', () => {
             })(),
             solution: (() => {
                 return [
-                    [0,1,0,1,0,0,1,0,1,1,0,0,1,1], // 14 cells, 7 zeros 7 ones each
-                    [0,0,1,1,0,1,0,0,1,0,1,1,0,0],
-                    [1,1,1,0,0,1,0,1,0,0,1,0,0,1],
-                    [1,0,0,1,1,0,0,0,0,1,1,0,1,1], // Adjusted
-                    [1,0,0,0,1,1,0,1,1,0,0,0,1,1],
-                    [0,1,0,0,1,1,0,0,1,0,1,1,0,0],
-                    [0,1,1,0,0,0,1,1,1,0,0,1,0,1],
-                    [0,0,1,1,0,0,0,1,1,0,1,0,1,1],
-                    [1,1,1,0,0,0,1,0,0,1,0,0,1,1], // Adjusted
-                    [1,0,0,1,1,0,1,0,0,1,1,0,1,0],
-                    [1,0,0,0,1,1,0,1,0,1,0,1,0,0], // Adjusted
-                    [0,1,0,1,0,0,1,1,0,1,0,0,1,0],
-                    [0,1,1,0,0,1,1,0,1,0,0,1,0,1],
-                    [0,0,0,1,1,0,0,0,1,1,1,0,1,0]  // Adjusted
+                    [1,1,0,0,1,0,0,1,0,1,0,1,0,1],
+                    [0,1,0,1,0,0,1,0,1,1,0,1,1,0],
+                    [1,0,1,1,0,1,0,0,1,0,1,0,0,1],
+                    [0,0,1,0,1,0,1,1,0,1,0,1,1,0],
+                    [1,1,0,0,1,0,0,1,0,1,1,0,0,1],
+                    [1,0,0,1,0,1,1,0,1,0,1,0,1,0],
+                    [0,1,1,0,0,1,1,0,1,1,0,1,0,0],
+                    [0,1,0,1,1,0,0,1,0,0,1,1,0,1],
+                    [1,0,1,1,0,0,1,1,0,1,0,0,1,0],
+                    [0,0,1,0,1,1,0,0,1,0,1,0,1,1],
+                    [1,1,0,0,1,1,0,1,0,0,1,1,0,0],
+                    [1,0,0,1,0,0,1,1,0,1,0,0,1,1],
+                    [0,1,1,0,1,1,0,0,1,0,0,1,0,1],
+                    [0,0,1,1,0,1,1,0,1,0,1,0,1,0]
                 ];
             })()
         }
@@ -811,6 +815,13 @@ document.addEventListener('DOMContentLoaded', () => {
     // New puzzle (just reloads the same — for demo purposes)
     document.getElementById('newPuzzleBtn').addEventListener('click', () => {
         loadPuzzle(currentSize);
+    });
+
+    // Re-render practice grid on resize for responsive cell sizing
+    window.addEventListener('resize', () => {
+        if (currentPuzzle) {
+            refreshPractice();
+        }
     });
 
     // Initial load
