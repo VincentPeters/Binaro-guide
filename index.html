@@ -55,7 +55,7 @@
         </div>
         <div class="hero-stats">
             <div class="stat"><span class="stat-num">6</span><span class="stat-label">Chapters</span></div>
-            <div class="stat"><span class="stat-num">25+</span><span class="stat-label">Techniques</span></div>
+            <div class="stat"><span class="stat-num">18</span><span class="stat-label">Techniques</span></div>
             <div class="stat"><span class="stat-num">14×14</span><span class="stat-label">Max Grid</span></div>
         </div>
     </div>
@@ -115,12 +115,12 @@
                     <div class="rule-example bad">
                         <div class="rule-label">Forbidden</div>
                         <div class="mini-row">
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm zero err">0</span>
+                            <span class="cell-sm one">1</span>
+                            <span class="cell-sm one">1</span>
                             <span class="cell-sm zero">0</span>
-                            <span class="cell-sm zero err">0</span>
-                            <span class="cell-sm zero err">0</span>
-                            <span class="cell-sm one">1</span>
-                            <span class="cell-sm one">1</span>
-                            <span class="cell-sm zero err">0</span>
                         </div>
                     </div>
                 </div>
@@ -147,9 +147,9 @@
                         <div class="rule-label">Four 0s, two 1s — wrong!</div>
                         <div class="mini-row">
                             <span class="cell-sm zero">0</span>
+                            <span class="cell-sm zero">0</span>
                             <span class="cell-sm one">1</span>
                             <span class="cell-sm zero err">0</span>
-                            <span class="cell-sm zero">0</span>
                             <span class="cell-sm zero err">0</span>
                             <span class="cell-sm one">1</span>
                         </div>
@@ -457,12 +457,12 @@
                     <div>
                         <strong>How it works:</strong> Suppose a 6-cell row looks like:
                         <span class="cell-inline one">1</span>
-                        <span class="cell-inline zero">0</span>
                         <span class="cell-inline one">1</span>
+                        <span class="cell-inline zero">0</span>
                         <span class="cell-inline empty">?</span>
                         <span class="cell-inline zero">0</span>
                         <span class="cell-inline empty">?</span>.
-                        Count: two 1s, two 0s. Need one more of each. The 4th cell is next to a 1, and cell 6 is after a 0 — but you must also avoid three in a row!
+                        Count: two 1s, two 0s. Need one more of each. If cell 4 were 0, cells 3-4-5 would be three 0s in a row — forbidden! So cell 4 must be 1, and cell 6 must be 0.
                     </div>
                 </div>
             </div>
@@ -648,7 +648,7 @@
                         <span class="cell-sm zero">0</span>
                         <span class="cell-sm zero">0</span>
                     </div>
-                    <div class="uniq-note">Row A's unknowns can't be (1,0) — that would duplicate Row B! So they must differ.</div>
+                    <div class="uniq-note">Row A's unknowns can't be (1,0) — that would duplicate Row B! So they must be (0,1).</div>
                 </div>
             </div>
         </div>
