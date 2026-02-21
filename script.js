@@ -50,6 +50,38 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.content-block').forEach(block => observer.observe(block));
 
     // ========================================
+    // BEFORE/AFTER SOLVE ANIMATION
+    // ========================================
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReducedMotion) {
+        document.querySelectorAll('.before-after').forEach(ba => {
+            const afterItem = ba.querySelector('.ba-item:last-child');
+            if (!afterItem) return;
+            const solvedCells = afterItem.querySelectorAll('.cell-sm.solved');
+            if (solvedCells.length === 0) return;
+
+            solvedCells.forEach((cell, i) => {
+                cell.classList.add('solve-pending');
+                cell.style.animationDelay = (0.3 + i * 0.25) + 's';
+            });
+
+            const baObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        solvedCells.forEach(cell => {
+                            cell.classList.remove('solve-pending');
+                            cell.classList.add('solve-active');
+                        });
+                        baObserver.unobserve(ba);
+                    }
+                });
+            }, { threshold: 0.3 });
+
+            baObserver.observe(ba);
+        });
+    }
+
+    // ========================================
     // HERO BACKGROUND GRID
     // ========================================
     const heroBg = document.getElementById('heroBgGrid');
