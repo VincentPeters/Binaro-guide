@@ -32,22 +32,67 @@ function initBeforeAfterSolve() {
     document.querySelectorAll('.before-after').forEach(ba => {
         const afterItem = ba.querySelector('.ba-item:last-child');
         if (!afterItem) return;
-        const solvedCells = afterItem.querySelectorAll('.cell-sm.solved');
+        const solvedCells = Array.from(afterItem.querySelectorAll('.cell-sm.solved'));
         if (solvedCells.length === 0) return;
 
+        const STAGGER = 200;   // ms between each cell animating in
+        const HOLD    = 2500;  // ms to hold all cells visible
+        const PAUSE   = 800;   // ms pause (cells hidden) before next cycle
+        const ANIM_MS = 500;   // matches CSS popIn duration
+
+        // Set per-cell stagger delay
         solvedCells.forEach((cell, i) => {
             cell.classList.add('solve-pending');
-            cell.style.animationDelay = (0.3 + i * 0.25) + 's';
+            cell.style.animationDelay = (i * STAGGER / 1000) + 's';
         });
+
+        let timerId = null;
+        let isVisible = false;
+
+        function resetCells() {
+            // Instant hide — suppress the transition so there's no animate-out
+            solvedCells.forEach(cell => {
+                cell.style.transition = 'none';
+                cell.classList.remove('solve-active');
+                cell.classList.add('solve-pending');
+            });
+            void afterItem.offsetHeight;            // force reflow
+            solvedCells.forEach(cell => {
+                cell.style.transition = '';
+            });
+        }
+
+        function runCycle() {
+            if (!isVisible) return;
+
+            // Animate in (staggered via CSS animation-delay)
+            solvedCells.forEach(cell => {
+                cell.classList.remove('solve-pending');
+                cell.classList.add('solve-active');
+            });
+
+            const totalAnimTime = (solvedCells.length - 1) * STAGGER + ANIM_MS;
+
+            // After animation + hold, reset and schedule next cycle
+            timerId = setTimeout(() => {
+                if (!isVisible) return;
+                resetCells();
+                timerId = setTimeout(runCycle, PAUSE);
+            }, totalAnimTime + HOLD);
+        }
 
         const baObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    solvedCells.forEach(cell => {
-                        cell.classList.remove('solve-pending');
-                        cell.classList.add('solve-active');
-                    });
-                    baObserver.unobserve(ba);
+                    if (!isVisible) {
+                        isVisible = true;
+                        resetCells();
+                        runCycle();
+                    }
+                } else {
+                    isVisible = false;
+                    clearTimeout(timerId);
+                    timerId = null;
                 }
             });
         }, { threshold: 0.3 });
