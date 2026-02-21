@@ -895,6 +895,25 @@ footer {
 .footer-cell.c0 { background: var(--cell-zero-bg); }
 .footer-cell.c1 { background: var(--cell-one-bg); }
 
+/* ---------- Mobile Before/After Layout ---------- */
+@media (max-width: 768px) {
+    .before-after {
+        flex-direction: column;
+    }
+    .ba-arrow {
+        transform: rotate(90deg);
+    }
+}
+
+/* ---------- Solve Fill-In Animation ---------- */
+.cell-sm.solved.solve-pending {
+    opacity: 0;
+    transform: scale(0.5);
+}
+.cell-sm.solved.solve-active {
+    animation: popIn 0.4s ease forwards;
+}
+
 /* ---------- Animations / Visibility ---------- */
 /* Only hide content when JS is available to reveal it */
 .js .content-block {
@@ -929,4 +948,6 @@ footer {
     }
     .puzzle-grid .cell.just-solved { animation: none; }
     .scroll-indicator { animation: none; }
+    .cell-sm.solved.solve-pending { opacity: 1; transform: none; }
+    .cell-sm.solved.solve-active { animation: none; }
 }
